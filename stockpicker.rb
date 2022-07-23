@@ -3,27 +3,45 @@
 
 def stock_picker(array)
 
-  # get reduce to create sub arrays
-  array.each_with_index.reduce([]) do |arr, (element, index)|
+  #outer loop
+  solution_arr = array.each_with_index.reduce([0, 0]) do |arr, (element, index)|
+    
+    p index                                                                     # extra iteration, the last iteration can be eliminated
+
     buy_price = array[index]
-    result = array[ index+1 .. -1 ].reduce(0) do |high, nth_price|
+    
+    #inner loop
+    max_profit_of_subarr = array[ index+1 .. -1 ].reduce(0) do |high, nth_price| # there's an extra iteration because of index+1, fixes?
+
       profit = nth_price - buy_price
       if profit > high 
         high = profit 
       end
       high
     end
-    [buy_price, result]
+
+    overall_max_profit = arr[1]
+    optimal_buy_price = arr[0]
+
+    if max_profit_of_subarr > overall_max_profit
+      overall_max_profit = max_profit_of_subarr
+      optimal_buy_price = buy_price
+    end
+
+    [optimal_buy_price, overall_max_profit]
   end
 
+  solution_buy_price = solution_arr[0]
+  solution_max_profit = solution_arr[1]
+  solution_sell_price = solution_max_profit + solution_buy_price
 
-
-  # this will find highest profit given price and ONE array
-  
+  buy_index = array.find_index(solution_buy_price)
+  sell_index = array.find_index(solution_sell_price)
+  p [buy_index, sell_index]
 end
 
-# p stock_picker([17,3,6,9,15,8,6,1,10]) # => [1, 4]
-stock_picker([3,2,1,8]) # simpler arr
+# stock_picker([17,3,6,9,15,8,6,1,10]) # => [1, 4]
+stock_picker([3, 2, 1, 8]) # simpler arr
 
 
 
