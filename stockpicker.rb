@@ -6,9 +6,9 @@ def stock_picker(array)
   buy_index = 0
   sell_index = 0
 
-  array.each_with_index do |item1, index1|
-    array[index1 + 1 .. -1].each_with_index do |item2, index2|
-      profit = item2 - array[index1]
+  array.each_with_index do |day1, index1|
+    array[index1 + 1 .. -1].each_with_index do |day2, index2|
+      profit = day2 - day1
       if profit > max_profit
         max_profit = profit
         buy_index = index1
@@ -17,7 +17,7 @@ def stock_picker(array)
     end
   end
 
-  [buy_index, sell_index]
+  p [buy_index, sell_index]
 end
 
 stock_picker([17,3,6,9,15,8,6,1,10]) # => [1, 4]
