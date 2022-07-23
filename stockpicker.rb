@@ -1,13 +1,29 @@
 # Odin Ruby stock picker
 # https://www.theodinproject.com/lessons/ruby-stock-picker
 
-def stock_picker2(array)
+def stock_picker(array)
+
+  # get reduce to create sub arrays
+  array.each_with_index.reduce([]) do |arr, (element, index)|
+    buy_price = array[index]
+    result = array[ index+1 .. -1 ].reduce(0) do |high, nth_price|
+      profit = nth_price - buy_price
+      if profit > high 
+        high = profit 
+      end
+      high
+    end
+    [buy_price, result]
+  end
 
 
+
+  # this will find highest profit given price and ONE array
+  
 end
 
 # p stock_picker([17,3,6,9,15,8,6,1,10]) # => [1, 4]
-stock_picker([17,3,6,9,15,8,6,1,10]) # no print
+stock_picker([3,2,1,8]) # simpler arr
 
 
 
